@@ -1,10 +1,13 @@
 import React from 'react';
-import './App.css';
+
+// COMPONENTS
+import {AppRouter} from "./routes/Router";
+
+import './styles/App.css';
 
 const App = () => {
     return (
-        <div className="App">
-        </div>
+        <AppRouter/>
     );
 }
 
