@@ -20,7 +20,7 @@ export const AppRouter = ({isLogin, userInfo}: AppRouterType) => {
             <Routes>
                 {isLogin ? (
                     <>
-                        <Route path="/" element={<Main/>}></Route>
+                        <Route path="/" element={<Main userInfo={userInfo}/>}></Route>
                     </>
                 ) : (
                     <>
