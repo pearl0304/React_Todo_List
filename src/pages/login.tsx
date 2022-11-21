@@ -1,9 +1,14 @@
 import React, { ChangeEvent, useState } from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // FIREBASE
-import { firebaseAuth } from "../initFirebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { firebaseAuth, fireStoreJob } from "../initFirebase";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
 
 // INTERFACE
 import { UserInputInterface } from "../interfaces/user.interface";
@@ -11,9 +16,11 @@ import { UserInputInterface } from "../interfaces/user.interface";
 // CSS
 import { UserForm } from "../styles/userForm.styled";
 import { Button, TextField } from "@mui/material";
-
+import GoogleIcon from "@mui/icons-material/Google";
+import moment from "moment";
 
 export const Login = () => {
+  const firestore_path = "users";
   const navigate = useNavigate();
   const [inputs, setInputs] = useState<UserInputInterface>({
     email: "",
@@ -39,6 +46,28 @@ export const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.warn(`${errorCode} = ${errorMessage}`);
+      });
+  };
+
+  const onClickGoogle = async (e: any) => {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(firebaseAuth, provider)
+      .then(async (result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = result.user;
+
+        await addDoc(collection(fireStoreJob, firestore_path), {
+          uid: user.uid,
+          displayName:user.displayName,
+          date_created: moment().utc().format(),
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.warn(`${errorCode - errorMessage}`);
       });
   };
 
@@ -79,6 +108,17 @@ export const Login = () => {
                 Log In
               </Button>
             </form>
+            <div className={"google-btn"}>
+              <Button
+                onClick={onClickGoogle}
+                name={"google"}
+                variant={"outlined"}
+                type={"button"}
+              >
+                <GoogleIcon style={{ marginRight: "5px" }} />
+                Login with Google account
+              </Button>
+            </div>
           </div>
           <div className={"cont-link"}>
             <Link

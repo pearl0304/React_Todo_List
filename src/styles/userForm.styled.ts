@@ -22,6 +22,8 @@ export const UserForm = styled.div`
     padding: 0 69px;
     border: 1px solid rgba(0, 0, 0, 0.12);
     font-size: 12px;
+    display: flex;
+    flex-direction: column;
   }
 
   .user-form-article > .user-form-wrap {
@@ -47,6 +49,12 @@ export const UserForm = styled.div`
     margin-top: 10px;
     padding: 15px;
     margin-bottom: 20px;
+  }
+  .google-btn button {
+    margin-top: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 340px;
   }
   
   .cont-link {
