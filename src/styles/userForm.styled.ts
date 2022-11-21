@@ -20,14 +20,14 @@ export const UserForm = styled.div`
     height: 100%;
     margin: 40px auto 42px;
     padding: 0 69px;
-    border: 1px solid rgba(0, 0, 0, .12);
+    border: 1px solid rgba(0, 0, 0, 0.12);
     font-size: 12px;
   }
 
   .user-form-article > .user-form-wrap {
     word-wrap: break-word;
     position: relative;
-    padding: 10px 0px
+    padding: 10px 0px;
   }
 
   .user-form {
@@ -40,7 +40,7 @@ export const UserForm = styled.div`
   }
 
   .user-form > form div {
-    margin : 8px 0px;
+    margin: 8px 0px;
   }
 
   .user-form > form button {
@@ -48,5 +48,12 @@ export const UserForm = styled.div`
     padding: 15px;
     margin-bottom: 20px;
   }
-
+  
+  .cont-link {
+    width: 440px;
+    height: 30px;
+    align-items: center;
+    line-height: 30px;
+    text-align: center;
+  }
 `;

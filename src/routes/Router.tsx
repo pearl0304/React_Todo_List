@@ -1,17 +1,35 @@
 import React from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
+// INTERFACE
+import {UserInterface} from "../interfaces/user.interface";
+
 // COMPONENTS
 import {SignUp} from "../pages/signUp";
-import {Login} from "../pages/login"
+import {Login} from "../pages/login";
+import {Main} from "../pages/main";
 
-export const AppRouter = () => {
+type AppRouterType = {
+    isLogin: boolean;
+    userInfo: UserInterface | null;
+};
+
+export const AppRouter = ({isLogin, userInfo}: AppRouterType) => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/signup' element={<SignUp/>}></Route>
-                <Route path='/login' element={<Login/>}></Route>
+                {isLogin ? (
+                    <>
+                        <Route path="/" element={<Main/>}></Route>
+                    </>
+                ) : (
+                    <>
+                        <Route path="/login" element={<Login/>}></Route>
+                        <Route path="/signup" element={<SignUp/>}></Route>
+
+                    </>
+                )}
             </Routes>
         </BrowserRouter>
-    )
-}
+    );
+};

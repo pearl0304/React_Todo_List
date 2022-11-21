@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from "react";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from "react-router-dom";
 import moment from "moment";
 
 // FIREBASE
@@ -14,9 +14,8 @@ import {UserInputInterface} from "../interfaces/user.interface";
 import {UserForm} from "../styles/userForm.styled";
 import {Button, TextField} from "@mui/material";
 
-
 export const SignUp = () => {
-    const firestore_path = 'users';
+    const firestore_path = "users";
     const navigate = useNavigate();
     const [inputs, setInputs] = useState<UserInputInterface>({
         email: "",
@@ -43,7 +42,6 @@ export const SignUp = () => {
                     date_created: moment().utc().format()
                 })
                 navigate("/login");
-
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -54,7 +52,7 @@ export const SignUp = () => {
 
     return <UserForm>
         <div className={'doc-title'}>
-            <span>TODO LIST</span>
+            <span>Sign Up</span>
         </div>
         <article className={'user-form-article'}>
             <div className={'user-form-wrap'}>
