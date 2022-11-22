@@ -22,6 +22,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { UserInterface } from "../interfaces/user.interface";
+import { TodoInterface } from "../interfaces/todo.interface";
 
 type TodoListType = {
   userInfo: UserInterface;
@@ -29,7 +30,7 @@ type TodoListType = {
 
 export const TodoList = ({ userInfo }: TodoListType) => {
   const firestore_path = "tasks";
-  const [list, setList] = useState<TodoListType[]>([]);
+  const [list, setList] = useState<TodoInterface[]>([]);
 
   useEffect(() => {
     const q = query(
@@ -45,20 +46,19 @@ export const TodoList = ({ userInfo }: TodoListType) => {
         };
       });
       // @ts-ignore
-        setList(arr)
+      setList(arr);
     });
 
     return () => {
-        unsubscribe()
-    }
+      unsubscribe();
+    };
   }, []);
-
-  console.log(list)
 
   return (
     <TodoListWrap>
+      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer>
-        <Table>
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell>TODO</TableCell>
@@ -66,9 +66,20 @@ export const TodoList = ({ userInfo }: TodoListType) => {
               <TableCell>Done</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody></TableBody>
+          <TableBody>
+            {list.map((data) => {
+              return (
+                <TableRow key={data.id} id={data.id}>
+                  <TableCell>{data.task}</TableCell>
+                  <TableCell>{data.date}</TableCell>
+                  <TableCell>{data.status}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
         </Table>
       </TableContainer>
+      </Paper>
     </TodoListWrap>
   );
 };
