@@ -4,13 +4,11 @@ import moment from "moment";
 import { TodoList } from "../Components/todoList";
 
 // FIREBASE
-import { firebaseAuth, fireStoreJob } from "../initFirebase";
+import { fireStoreJob } from "../initFirebase";
 import { collection, addDoc } from "firebase/firestore";
 
 // INTERFACE
-import {
-  TodoInputInterface,
-} from "../interfaces/todo.interface";
+import { TodoInputInterface } from "../interfaces/todo.interface";
 
 // CSS
 import { Button, Input } from "@mui/material";
@@ -57,7 +55,7 @@ export const Main = ({ userInfo }: any) => {
             <span>{userInfo.displayName}</span>
           </div>
         </div>
-        <TodoList />
+        <TodoList userInfo={userInfo} />
         <div className={"todo-submit"}>
           <div>
             <Input
