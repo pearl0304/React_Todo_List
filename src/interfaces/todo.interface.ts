@@ -1,11 +1,13 @@
 export interface TodoInterface {
-    displayName: string,
-    todo: string,
+    uid:string,
+    task: string,
     status: string,
+    date?: string,
     date_created: string,
 }
 
 export interface TodoInputInterface {
-    todo: string,
-    status: string
+    task: string,
+    status?: string,
+    date?: string
 }

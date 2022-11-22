@@ -1,22 +1,54 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
+import moment from "moment";
+// COMPONENT
+import { TodoList } from "../Components/todoList";
 
-// CSS
-import { MainWrapper } from "../styles/main.styled";
-import { UserForm } from "../styles/userForm.styled";
+// FIREBASE
+import { firebaseAuth, fireStoreJob } from "../initFirebase";
+import { collection, addDoc } from "firebase/firestore";
 
 // INTERFACE
-import { UserInterface } from "../interfaces/user.interface";
 import {
-  TodoInterface,
   TodoInputInterface,
 } from "../interfaces/todo.interface";
-import { Input } from "@mui/material";
-import {TodoForm} from "../Components/todoform";
+
+// CSS
+import { Button, Input } from "@mui/material";
+import { MainWrapper } from "../styles/main.styled";
 
 export const Main = ({ userInfo }: any) => {
+  const firestore_path = "tasks";
+  const [inputs, setInputs] = useState<TodoInputInterface>({
+    task: "",
+    date: "",
+  });
+
+  const { task, date } = inputs;
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+    setInputs({ ...inputs, [name]: value });
+  };
+
+  const onClick = async (e: any) => {
+    if (task === "") {
+      alert("Please write task");
+      return false;
+    }
+
+    await addDoc(collection(fireStoreJob, firestore_path), {
+      uid: userInfo.uid,
+      task: task,
+      status: "READY",
+      date: date,
+      date_created: moment().utc().format(),
+    });
+    setInputs({ task: "", date: "" });
+  };
+
   return (
     <MainWrapper>
-      <div className={'main-box'}>
+      <div className={"main-box"}>
         <div className={"doc-title"}>
           <div>
             <span>TODO LIST</span>
@@ -25,7 +57,32 @@ export const Main = ({ userInfo }: any) => {
             <span>{userInfo.displayName}</span>
           </div>
         </div>
-        <TodoForm />
+        <TodoList />
+        <div className={"todo-submit"}>
+          <div>
+            <Input
+              onChange={onChange}
+              value={task}
+              name={"task"}
+              placeholder={"What is your task"}
+              type={"text"}
+            />
+          </div>
+          <div>
+            <Input
+              onChange={onChange}
+              value={date}
+              name={"date"}
+              placeholder={"Dead Line"}
+              type={"date"}
+            />
+          </div>
+          <div>
+            <Button onClick={onClick} type={"button"} variant={"contained"}>
+              Submit
+            </Button>
+          </div>
+        </div>
       </div>
     </MainWrapper>
   );
