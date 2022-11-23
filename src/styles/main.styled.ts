@@ -1,35 +1,26 @@
-import styled from "styled-components";
+import { styled } from "@mui/material";
 
-export const MainWrapper = styled.div`
+export const MainWrapper = styled("div")`
   .main-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
-    position: relative;
+    width: 80%;
+    margin-left: 50%;
+    transform: translateX(-50%);
   }
-  
+
   .doc-title {
     display: flex;
+    background-color: #eee;
     flex-direction: column;
-    margin-top: 100px;
-    margin-bottom: 50px;
+    margin: 50px 0px;
   }
-  
+
   .doc-title > div {
     padding: 10px;
   }
-  
-  .todo-submit {
-    position: fixed;
-    bottom: 0px;
+
+  .todo-box {
     width: 100%;
-    padding: 10px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
   }
-
-
-
 `;
