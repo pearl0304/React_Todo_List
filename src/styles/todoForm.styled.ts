@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import { styled } from "@mui/material";
 
-export const TodoFormWrap = styled.div`
+export const TodoFormWrap = styled("div")`
   width: 30%;
   height: 280px;
   display: flex;

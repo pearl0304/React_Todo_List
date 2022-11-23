@@ -41,7 +41,7 @@ export const SignUp = () => {
                     ...inputs,
                     date_created: moment().utc().format()
                 })
-                navigate("/login");
+                navigate("/");
             })
             .catch((error) => {
                 const errorCode = error.code;

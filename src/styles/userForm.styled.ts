@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import { styled } from "@mui/material";
 
-export const UserForm = styled.div`
+export const UserForm = styled("div")`
   .doc-title {
     padding-top: 50px;
     display: block;
