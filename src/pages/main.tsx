@@ -2,9 +2,11 @@ import React from "react";
 
 // COMPONENT
 import { TodoList } from "../Components/todoList";
-
-import { MainWrapper } from "../styles/main.styled";
 import { TodoForm } from "../Components/todoForm";
+
+// CSS
+import { MainWrapper } from "../styles/main.styled";
+
 
 export const Main = ({ userInfo }: any) => {
   return (
@@ -19,7 +21,7 @@ export const Main = ({ userInfo }: any) => {
           </div>
         </div>
         <div className={'todo-box'}>
-          <TodoList userInfo={userInfo} />
+          {/*<TodoList userInfo={userInfo} />*/}
           <TodoForm userInfo={userInfo} />
         </div>
       </div>
