@@ -7,9 +7,14 @@ import {
   query,
   where,
   orderBy,
-  doc,
   onSnapshot,
+  updateDoc,
+  doc,
 } from "firebase/firestore";
+
+// INTERFACE
+import { UserInterface } from "../interfaces/user.interface";
+import { TodoInterface } from "../interfaces/todo.interface";
 
 // CSS
 import { TodoListWrap } from "../styles/todoList.styled";
@@ -21,8 +26,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { UserInterface } from "../interfaces/user.interface";
-import { TodoInterface } from "../interfaces/todo.interface";
+import Checkbox from "@mui/material/Checkbox";
 
 type TodoListType = {
   userInfo: UserInterface;
@@ -36,6 +40,7 @@ export const TodoList = ({ userInfo }: TodoListType) => {
     const q = query(
       collection(fireStoreJob, firestore_path),
       where("uid", "==", userInfo.uid),
+      where("status", "==", "READY"),
       orderBy("date_created", "desc")
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -54,31 +59,41 @@ export const TodoList = ({ userInfo }: TodoListType) => {
     };
   }, []);
 
+  const onClick = async (e: any) => {
+    const doc_id = e.target.id;
+    const ref = doc(fireStoreJob, firestore_path, doc_id);
+    await updateDoc(ref, {
+      status: "DONE",
+    });
+  };
+
   return (
     <TodoListWrap>
-      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <TableCell>TODO</TableCell>
-              <TableCell>Dead Line</TableCell>
-              <TableCell>Done</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {list.map((data) => {
-              return (
-                <TableRow key={data.id} id={data.id}>
-                  <TableCell>{data.task}</TableCell>
-                  <TableCell>{data.date}</TableCell>
-                  <TableCell>{data.status}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+        <TableContainer>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                <TableCell>TODO</TableCell>
+                <TableCell>Dead Line</TableCell>
+                <TableCell>Done</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {list.map((data) => {
+                return (
+                  <TableRow key={data.id} id={data.id}>
+                    <TableCell>{data.task}</TableCell>
+                    <TableCell>{data.date}</TableCell>
+                    <TableCell>
+                      <Checkbox onClick={onClick} id={data.id} />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Paper>
     </TodoListWrap>
   );
