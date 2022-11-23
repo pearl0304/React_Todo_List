@@ -21,7 +21,7 @@ export const Main = ({ userInfo }: any) => {
           </div>
         </div>
         <div className={'todo-box'}>
-          {/*<TodoList userInfo={userInfo} />*/}
+          <TodoList userInfo={userInfo} />
           <TodoForm userInfo={userInfo} />
         </div>
       </div>
